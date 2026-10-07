@@ -400,6 +400,28 @@
       "version": "1.1.0"
     },
     {
+      "archive": "packages/ble-keyboard/0.1.0/ble-keyboard-0.1.0.sopkg",
+      "author": "SolarOS",
+      "category": "utilities",
+      "description": "Forward a local keyboard to a paired BLE host with a live transmission log.",
+      "entry": "ble_keyboard.py",
+      "id": "ble-keyboard",
+      "min_solaros": "4.16.2",
+      "name": "BLE Keyboard",
+      "requires": [
+        "ble"
+      ],
+      "runtime": "python",
+      "sha256": "bb6fb6c5d0426bc918e458e70e03e99a61a88246374eef2398212d897fc705f0",
+      "size": 8590,
+      "tags": [
+        "ble",
+        "keyboard",
+        "tui"
+      ],
+      "version": "0.1.0"
+    },
+    {
       "archive": "packages/calendar/1.1.0/calendar-1.1.0.sopkg",
       "author": "Victor Khaze",
       "category": "utilities",
