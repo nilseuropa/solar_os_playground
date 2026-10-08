@@ -1,0 +1,13 @@
+{
+  "id": "sollama",
+  "name": "Sollama",
+  "version": "1.0.0",
+  "runtime": "python",
+  "entry": "sollama.py",
+  "category": "utilities",
+  "description": "Local Ollama server chat, model select, save chats to mSD, edit/resend prompts, etc. ",
+  "author": "LowFlowIO",
+  "min_solaros": "4.16.0",
+  "tags": ["chat", "llm", "ollama", "tui", "ai", "private", "local"],
+  "requires": ["wifi"]
+}
