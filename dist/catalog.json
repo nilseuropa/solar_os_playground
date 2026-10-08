@@ -676,8 +676,8 @@
         "wifi"
       ],
       "runtime": "python",
-      "sha256": "689d4deffb02b09eba8d3b52d4a38b530bf89f66ec3f1bb8c4ac51fb5b9631ba",
-      "size": 8224,
+      "sha256": "a5a60a2c3f2aab7d5f65e63127568965d434fa1f7df8cfeea280e86307aa84ee",
+      "size": 8156,
       "tags": [
         "ai",
         "chat",
