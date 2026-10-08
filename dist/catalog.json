@@ -406,14 +406,14 @@
       "description": "Forward a local keyboard to a paired BLE host with a live transmission log.",
       "entry": "ble_keyboard.py",
       "id": "ble-keyboard",
-      "min_solaros": "4.16.2",
+      "min_solaros": "4.16.3",
       "name": "BLE Keyboard",
       "requires": [
         "ble"
       ],
       "runtime": "python",
-      "sha256": "bb6fb6c5d0426bc918e458e70e03e99a61a88246374eef2398212d897fc705f0",
-      "size": 8590,
+      "sha256": "1efcc0ce64a0530067d23bd7cf7ee4cfa21f88e812b15c477ca0896205064b0c",
+      "size": 8633,
       "tags": [
         "ble",
         "keyboard",

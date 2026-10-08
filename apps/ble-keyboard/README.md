@@ -34,8 +34,10 @@ mode drops the current host connection and advertises a fresh peripheral
 identity, so an old paired host cannot take that pairing offer. Other saved host
 pairings remain in the host list. Launching with `--pair` starts this mode
 immediately. Opening the app normally starts idle; choose a saved host with
-Enter to offer it a connection. Wake that host or select its Bluetooth entry
-if it does not connect automatically. BLE hosts initiate the connection.
+Enter to offer it a connection. A saved host with Bluetooth enabled and HID
+reconnect support connects and restores encryption automatically, without
+opening its Bluetooth settings or pairing again. BLE hosts initiate the
+connection; a sleeping host must be awake to reconnect.
 
 The local keyboard stays available for selection and pairing controls until a
 host is connected, bonded, encrypted, and accepting keyboard reports. Then the
