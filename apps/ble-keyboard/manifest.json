@@ -1,0 +1,13 @@
+{
+  "id": "ble-keyboard",
+  "name": "BLE Keyboard",
+  "version": "0.1.0",
+  "runtime": "python",
+  "entry": "ble_keyboard.py",
+  "category": "utilities",
+  "description": "Forward a local keyboard to a paired BLE host with a live transmission log.",
+  "author": "SolarOS",
+  "min_solaros": "4.16.3",
+  "tags": ["ble", "keyboard", "tui"],
+  "requires": ["ble"]
+}
