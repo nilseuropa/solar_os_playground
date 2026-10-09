@@ -51,6 +51,9 @@ the one-line BLE state, and the last-typed preview occupy the side margins.
 
 Settings persist on the preferred SolarOS storage volume. BLE HID requires
 SolarOS 4.11.2 or later with Python, graphics, generic input, and BLE support.
+If BLE support is absent or disabled for the current boot, the app shows a
+message and exits before opening graphics. Run `ble enable` and reboot to
+enable BLE before launching the app.
 
 ## Origins and license
 

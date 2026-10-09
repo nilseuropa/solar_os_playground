@@ -1013,6 +1013,18 @@ def main():
     if parsed is None:
         return
     auto_trigger, dwell_ms, request_pairing = parsed
+    ble = getattr(solaros, "ble", None)
+    if getattr(ble, "hid", None) is None:
+        print("Hex-O-Spell requires firmware with BLE HID support.")
+        return
+    try:
+        # status() reports the current boot, rather than the saved boot preference.
+        if "disabled for this boot" in ble.status().lower():
+            print("BLE is disabled. Run 'ble enable', then reboot before starting Hex-O-Spell.")
+            return
+    except OSError as exc:
+        print("Hex-O-Spell could not read BLE status: " + str(exc))
+        return
     app = None
     gfx_started = False
     try:

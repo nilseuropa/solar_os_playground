@@ -54,8 +54,10 @@ when ready. Input loss and app exit also clear held keys. Keys entered while
 disconnected are discarded. The remote host generates repeat while a key is held.
 
 Requires a SolarOS build with BLE HID host management and keyboard capture.
-Builds without those APIs show a requirement message. Pairings and host identity
-metadata are stored by SolarOS in NVS. A selectable local keyboard must provide
+Builds without those APIs show a requirement message. If BLE is disabled for the
+current boot, the app exits with instructions to run `ble enable` and reboot.
+Pairings and host identity metadata are stored by SolarOS in NVS. A selectable
+local keyboard must provide
 canonical HID usages and key transitions; serial or telnet character input is
 not a physical keyboard source. The host determines the keyboard layout. The
 BLE report supports six ordinary held keys plus modifiers; consumer/media

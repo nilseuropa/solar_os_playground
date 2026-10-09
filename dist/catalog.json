@@ -1,7 +1,7 @@
 {
   "apps": [
     {
-      "archive": "packages/hex-o-spell/0.1.0/hex-o-spell-0.1.0.sopkg",
+      "archive": "packages/hex-o-spell/0.1.1/hex-o-spell-0.1.1.sopkg",
       "author": "Marton Juhasz",
       "category": "accessibility",
       "description": "Accessible six-direction BLE keyboard for touchscreens and joysticks.",
@@ -14,8 +14,8 @@
         "gfx"
       ],
       "runtime": "python",
-      "sha256": "f48fec2b65396a8620d32a640589157de6c77aa6c346c2ec98fe1fa57e3b3915",
-      "size": 12181,
+      "sha256": "c0a674d1aab3f347603926b58b0ea692dddaf934abfc1e1667c0f43bc91e28d4",
+      "size": 12461,
       "tags": [
         "accessibility",
         "ble",
@@ -23,7 +23,7 @@
         "keyboard",
         "touch"
       ],
-      "version": "0.1.0"
+      "version": "0.1.1"
     },
     {
       "archive": "packages/hello-lua/1.0.0/hello-lua-1.0.0.sopkg",
@@ -400,7 +400,7 @@
       "version": "1.1.0"
     },
     {
-      "archive": "packages/ble-keyboard/0.1.0/ble-keyboard-0.1.0.sopkg",
+      "archive": "packages/ble-keyboard/0.1.1/ble-keyboard-0.1.1.sopkg",
       "author": "SolarOS",
       "category": "utilities",
       "description": "Forward a local keyboard to a paired BLE host with a live transmission log.",
@@ -412,14 +412,14 @@
         "ble"
       ],
       "runtime": "python",
-      "sha256": "1efcc0ce64a0530067d23bd7cf7ee4cfa21f88e812b15c477ca0896205064b0c",
-      "size": 8633,
+      "sha256": "7ae6d23b2eafa905d45be954b69c2d49c7a3b40d57a7d88a1987aff3257140ec",
+      "size": 8829,
       "tags": [
         "ble",
         "keyboard",
         "tui"
       ],
-      "version": "0.1.0"
+      "version": "0.1.1"
     },
     {
       "archive": "packages/calendar/1.1.0/calendar-1.1.0.sopkg",

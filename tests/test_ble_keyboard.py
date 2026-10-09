@@ -98,7 +98,7 @@ class BleKeyboardTest(unittest.TestCase):
             addstr=self.addstr, refresh=lambda: None, getch=lambda timeout: None)
         self.runtime = types.SimpleNamespace(
             storage=self.storage,
-            input=self.input, ble=types.SimpleNamespace(hid=self.hid),
+            input=self.input, ble=types.SimpleNamespace(hid=self.hid, status=lambda: "idle"),
             tui=self.tui, time=types.SimpleNamespace(uptime_ms=lambda: self.clock,
                                                    sleep_ms=self.sleep),
             tick_interval=lambda ms: None, should_exit=lambda: False)
@@ -332,6 +332,37 @@ class BleKeyboardTest(unittest.TestCase):
         self.assertEqual(self.ble_calls, [("start", "SolarOS Keyboard", True)])
         self.assertEqual(len(self.app.hosts), 2)
         self.assertFalse(self.captures)
+
+    def test_disabled_ble_exits_before_creating_app_even_with_pair_argument(self):
+        self.runtime.ble.status = lambda: "disabled for this boot"
+        with patch.object(sys, "argv", ["ble_keyboard.py", "--pair"]), \
+                patch.object(self.module, "KeyboardApp") as create_app, \
+                patch("builtins.print") as output:
+            self.module.main()
+        create_app.assert_not_called()
+        self.assertFalse(self.ble_calls)
+        self.assertFalse(self.captures)
+        self.assertIn("ble enable", output.call_args.args[0])
+        self.assertIn("reboot", output.call_args.args[0])
+
+    def test_missing_ble_api_exits_cleanly(self):
+        self.runtime.ble = None
+        with patch.object(sys, "argv", ["ble_keyboard.py"]), \
+                patch.object(self.module, "KeyboardApp") as create_app, \
+                patch("builtins.print") as output:
+            self.module.main()
+        create_app.assert_not_called()
+        self.assertIn("requires", output.call_args.args[0])
+
+    def test_hid_start_failure_exits_without_capture_or_stop(self):
+        self.start_failures = 1
+        with patch.object(sys, "argv", ["ble_keyboard.py"]), \
+                patch("builtins.print") as output:
+            self.module.main()
+        self.assertIn("could not start BLE HID", output.call_args.args[0])
+        self.assertFalse(self.ble_calls)
+        self.assertFalse(self.captures)
+        self.assertFalse(self.releases)
 
     def test_controls_remain_available_until_all_host_ready_conditions_hold(self):
         self.app.started = True

@@ -5,6 +5,7 @@ from pathlib import Path
 import sys
 import types
 import unittest
+from unittest.mock import Mock, patch
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -59,6 +60,48 @@ def load_app_module():
 
 
 class HexOSpellCoreTest(unittest.TestCase):
+    def test_disabled_ble_exits_before_graphics_or_hid_start(self) -> None:
+        for arguments in (["hex_o_spell.py"], ["hex_o_spell.py", "--pair"]):
+            with self.subTest(arguments=arguments):
+                module, _ = load_app_module()
+                hid = types.SimpleNamespace(start=Mock(), pair=Mock())
+                module.solaros.ble = types.SimpleNamespace(
+                    hid=hid, status=lambda: "disabled for this boot"
+                )
+                module.gfx.begin = Mock()
+                with patch.object(sys, "argv", arguments), \
+                        patch("builtins.print") as output:
+                    module.main()
+                module.gfx.begin.assert_not_called()
+                hid.start.assert_not_called()
+                hid.pair.assert_not_called()
+                self.assertIn("ble enable", output.call_args.args[0])
+                self.assertIn("reboot", output.call_args.args[0])
+
+    def test_missing_ble_api_exits_before_graphics(self) -> None:
+        module, _ = load_app_module()
+        module.gfx.begin = Mock()
+        with patch.object(sys, "argv", ["hex_o_spell.py"]), \
+                patch("builtins.print") as output:
+            module.main()
+        module.gfx.begin.assert_not_called()
+        self.assertIn("requires", output.call_args.args[0])
+
+    def test_enabled_ble_runs_and_releases_graphics(self) -> None:
+        module, _ = load_app_module()
+        module.solaros.ble = types.SimpleNamespace(hid=object(), status=lambda: "idle")
+        module.solaros.tick_interval = Mock()
+        module.gfx.begin = Mock()
+        module.gfx.end = Mock()
+        app = Mock()
+        with patch.object(sys, "argv", ["hex_o_spell.py"]), \
+                patch.object(module, "HexOSpellApp", return_value=app):
+            module.main()
+        module.gfx.begin.assert_called_once_with()
+        app.run.assert_called_once_with()
+        app.shutdown.assert_called_once_with()
+        module.gfx.end.assert_called_once_with()
+
     def test_touch_activation_selects_and_triggers_immediately(self) -> None:
         state = CORE.HexOSpellState()
         self.assertIsNone(state.activate(0))

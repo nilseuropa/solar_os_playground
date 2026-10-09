@@ -1,7 +1,7 @@
 {
   "id": "ble-keyboard",
   "name": "BLE Keyboard",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "runtime": "python",
   "entry": "ble_keyboard.py",
   "category": "utilities",

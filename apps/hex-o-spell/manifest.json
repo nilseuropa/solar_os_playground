@@ -1,7 +1,7 @@
 {
   "id": "hex-o-spell",
   "name": "Hex-O-Spell",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "runtime": "python",
   "entry": "hex_o_spell.py",
   "category": "accessibility",

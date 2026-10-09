@@ -532,7 +532,11 @@ class KeyboardApp:
         self.dirty = False
 
     def run(self, pair=False):
-        self.hid.start(DEVICE_NAME, True)
+        try:
+            self.hid.start(DEVICE_NAME, True)
+        except OSError as exc:
+            print("BLE Keyboard could not start BLE HID: " + str(exc))
+            return
         self.started = True
         self.refresh_hosts()
         if pair:
@@ -593,6 +597,14 @@ def main():
     if not all(hasattr(device_input, name) for name in
                ("capture_keyboard", "release_keyboard", "read_key")):
         print("BLE Keyboard requires firmware with keyboard capture.")
+        return
+    try:
+        # status() reports the current boot, rather than the saved boot preference.
+        if "disabled for this boot" in solaros.ble.status().lower():
+            print("BLE is disabled. Run 'ble enable', then reboot before starting BLE Keyboard.")
+            return
+    except OSError as exc:
+        print("BLE Keyboard could not read BLE status: " + str(exc))
         return
     app = KeyboardApp()
     try:
