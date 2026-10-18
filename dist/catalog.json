@@ -26,6 +26,30 @@
       "version": "0.1.1"
     },
     {
+      "archive": "packages/audio-basics/1.0.0/audio-basics-1.0.0.sopkg",
+      "author": "SolarOS",
+      "category": "examples",
+      "description": "Learn the synth API: waveforms, envelopes, chords, a second oscillator, filtering, and glide.",
+      "entry": "audio.py",
+      "id": "audio-basics",
+      "min_solaros": "4.6.15",
+      "name": "Audio Basics (Python)",
+      "requires": [
+        "audio",
+        "psram"
+      ],
+      "runtime": "python",
+      "sha256": "b91223717dfee48c78beae2d56daf7ce2f99ece070298011329c4ba550cdfcf8",
+      "size": 4377,
+      "tags": [
+        "audio",
+        "python",
+        "synth",
+        "tutorial"
+      ],
+      "version": "1.0.0"
+    },
+    {
       "archive": "packages/hello-lua/1.0.0/hello-lua-1.0.0.sopkg",
       "author": "SolarOS",
       "category": "examples",
