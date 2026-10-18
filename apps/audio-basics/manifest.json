@@ -1,0 +1,13 @@
+{
+  "id": "audio-basics",
+  "name": "Audio Basics (Python)",
+  "version": "1.0.0",
+  "runtime": "python",
+  "entry": "audio.py",
+  "category": "examples",
+  "description": "Learn the synth API: waveforms, envelopes, chords, a second oscillator, filtering, and glide.",
+  "author": "SolarOS",
+  "min_solaros": "4.6.15",
+  "tags": ["audio", "synth", "python", "tutorial"],
+  "requires": ["audio", "psram"]
+}
