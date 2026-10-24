@@ -1,0 +1,13 @@
+{
+  "id": "boing",
+  "name": "Boing",
+  "version": "1.0.0",
+  "runtime": "lua",
+  "entry": "boing.lua",
+  "category": "examples",
+  "description": "An Amiga-inspired red and white bouncing ball in a shaded 3D grid, rendered with Jet.",
+  "author": "SolarOS",
+  "min_solaros": "4.16.29",
+  "tags": ["jet", "3d", "amiga", "demo", "lua", "synth", "audio"],
+  "requires": ["gfx", "psram"]
+}
