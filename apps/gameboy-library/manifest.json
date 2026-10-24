@@ -1,0 +1,13 @@
+{
+  "id": "gameboy-library",
+  "name": "Game Boy Library",
+  "version": "1.0.4",
+  "runtime": "python",
+  "entry": "gameboy_library.py",
+  "category": "games",
+  "description": "Search Homebrew Hub, view screenshots, download Game Boy homebrew ROMs, and play them with the native emulator.",
+  "author": "SolarOS",
+  "min_solaros": "4.13.8",
+  "tags": ["gameboy", "homebrew", "library", "roms"],
+  "requires": ["wifi", "gfx", "psram"]
+}

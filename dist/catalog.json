@@ -185,6 +185,31 @@
       "version": "1.0.0"
     },
     {
+      "archive": "packages/gameboy-library/1.0.4/gameboy-library-1.0.4.sopkg",
+      "author": "SolarOS",
+      "category": "games",
+      "description": "Search Homebrew Hub, view screenshots, download Game Boy homebrew ROMs, and play them with the native emulator.",
+      "entry": "gameboy_library.py",
+      "id": "gameboy-library",
+      "min_solaros": "4.13.8",
+      "name": "Game Boy Library",
+      "requires": [
+        "gfx",
+        "psram",
+        "wifi"
+      ],
+      "runtime": "python",
+      "sha256": "c10fe9f439ff677d539ffe56cf86f66febbc60d20c03acaeff28f3206633e4fe",
+      "size": 13759,
+      "tags": [
+        "gameboy",
+        "homebrew",
+        "library",
+        "roms"
+      ],
+      "version": "1.0.4"
+    },
+    {
       "archive": "packages/hearth/1.0.0/hearth-1.0.0.sopkg",
       "author": "SolarOS",
       "category": "games",
