@@ -610,10 +610,18 @@ def _draw_message(width, height, title, lines):
     gfx.present()
 
 
-def _wait_for_retry(refresh_minutes):
+def _wait_for_retry(refresh_minutes, message=None):
+    width, height = gfx.size()
+    if message is not None:
+        _draw_message(width, height, "Weather", [message, "R retry   Q exit"])
     remaining_ms = refresh_minutes * 60 * 1000
     while not solaros.should_exit():
         key = gfx.getch(min(INPUT_POLL_MS, remaining_ms))
+        size = gfx.size()
+        if size != (width, height):
+            width, height = size
+            if message is not None:
+                _draw_message(width, height, "Weather", [message, "R retry   Q exit"])
         if key in (gfx.KEY_ESCAPE, KEY_Q, KEY_Q_UPPER):
             return False
         if key in (KEY_R, KEY_R_UPPER):
@@ -632,21 +640,27 @@ def _run_display(config):
         scale = "hourly"
         refresh_minutes = config["refresh_minutes"]
         while not solaros.should_exit():
+            width, height = gfx.size()
             _draw_message(width, height, "Weather", ["Loading Open-Meteo forecast..."])
             try:
                 weather = _fetch_weather(config)
             except (WeatherError, OSError) as exc:
                 print("weather: {}".format(exc))
-                if not _wait_for_retry(refresh_minutes):
+                if not _wait_for_retry(refresh_minutes, str(exc)):
                     break
                 continue
 
+            width, height = gfx.size()
             _draw_weather(width, height, weather, scale, refresh_minutes)
             refresh = False
             remaining_ms = refresh_minutes * 60 * 1000
             while not solaros.should_exit():
                 wait_ms = min(INPUT_POLL_MS, remaining_ms)
                 key = gfx.getch(wait_ms)
+                size = gfx.size()
+                if size != (width, height):
+                    width, height = size
+                    _draw_weather(width, height, weather, scale, refresh_minutes)
                 if key in (gfx.KEY_ESCAPE, KEY_Q, KEY_Q_UPPER):
                     return
                 if key in (KEY_R, KEY_R_UPPER):

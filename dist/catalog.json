@@ -199,8 +199,8 @@
         "wifi"
       ],
       "runtime": "python",
-      "sha256": "c10fe9f439ff677d539ffe56cf86f66febbc60d20c03acaeff28f3206633e4fe",
-      "size": 13759,
+      "sha256": "ab83a2ddb36653534c95cac982a710573d546ca5fdfc921560a171e50edb56c4",
+      "size": 13894,
       "tags": [
         "gameboy",
         "homebrew",
@@ -294,8 +294,8 @@
         "gfx"
       ],
       "runtime": "lua",
-      "sha256": "e6aa30fc02cb26da0467608ef42f40f8c17fb0212c71dfb75b6bb5c28acc8f01",
-      "size": 4126,
+      "sha256": "a43d9775b3923ae4e05c2a53847a3769b9d30356905efa2851dee93c77494607",
+      "size": 4199,
       "tags": [
         "boxes",
         "e-paper",
@@ -828,8 +828,8 @@
         "wifi"
       ],
       "runtime": "python",
-      "sha256": "2225fc16a7143d6a955c6c96addf148c795553fce47e7208aac1997274c22c51",
-      "size": 7938,
+      "sha256": "28d80b06fc11a29c19caed96a6887dc5f9f3b5cd8afc13d94445b8a7bb9803f4",
+      "size": 8060,
       "tags": [
         "forecast",
         "open-meteo",

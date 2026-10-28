@@ -12,6 +12,7 @@ from library import CATEGORIES, MAX_PAGE_SIZE, Cancelled, Library, fit_image, te
 ROOT = "/Games/GameBoy"
 ENTER = (10, 13)
 BACKSPACE = (8, 127)
+RESIZE = -2
 
 
 def clipped(value, width):
@@ -39,10 +40,8 @@ def wrapped(value, columns):
 class Browser:
     def __init__(self, library):
         self.library = library
-        self.width, self.height = gfx.size()
-        self.compact = self.height < 160
-        self.top = 30 if self.compact else 49
-        self.bottom = self.height - (14 if self.compact else 28)
+        self.width = self.height = 0
+        self.update_layout()
         self.image_api = getattr(solaros, "image", None)
         if self.image_api and not all(hasattr(self.image_api, method)
                                       for method in ("open", "size", "draw", "close")):
@@ -51,6 +50,16 @@ class Browser:
         self.preview_note = ""
         self.last_progress = -1000
         self.active = True
+
+    def update_layout(self):
+        width, height = gfx.size()
+        if (width, height) == (self.width, self.height):
+            return False
+        self.width, self.height = width, height
+        self.compact = height < 160
+        self.top = 30 if self.compact else 49
+        self.bottom = height - (14 if self.compact else 28)
+        return True
 
     def label(self, x, y, value, width=None, bold=False):
         gfx.font(gfx.FONT_BOLD if bold else gfx.FONT_SMALL)
@@ -61,6 +70,7 @@ class Browser:
         gfx.text(x, y, clipped(value, width))
 
     def frame(self, title, subtitle="", footer="Enter select   Esc back"):
+        self.update_layout()
         gfx.clear(gfx.WHITE)
         gfx.color(gfx.BLACK)
         self.label(8, 13 if self.compact else 21, title,
@@ -75,7 +85,12 @@ class Browser:
     def key(self, timeout=200):
         if solaros.should_exit():
             raise Cancelled()
-        return gfx.getch(timeout)
+        if self.update_layout():
+            return RESIZE
+        key = gfx.getch(timeout)
+        if key is None and self.update_layout():
+            return RESIZE
+        return key
 
     def back(self, key):
         return key == gfx.KEY_ESCAPE or key in (ord("q"), ord("Q"))
@@ -85,16 +100,21 @@ class Browser:
         return self.back(key)
 
     def message(self, title, message, wait=True):
-        self.frame(title, "Game Boy Library", "Press any key" if wait else "Esc cancel")
-        for index, line in enumerate(wrapped(message, (self.width - 20) // 6)):
-            y = self.top + 11 + index * 12
-            if y >= self.bottom:
-                break
-            self.label(10, y, line)
-        gfx.present()
-        if wait:
-            while self.key() is None:
-                pass
+        while True:
+            self.frame(title, "Game Boy Library", "Press any key" if wait else "Esc cancel")
+            for index, line in enumerate(wrapped(message, (self.width - 20) // 6)):
+                y = self.top + 11 + index * 12
+                if y >= self.bottom:
+                    break
+                self.label(10, y, line)
+            gfx.present()
+            if not wait:
+                return
+            key = None
+            while key is None:
+                key = self.key()
+            if key != RESIZE:
+                return
 
     def progress(self, title):
         self.last_progress = -1000
@@ -120,8 +140,9 @@ class Browser:
 
     def menu(self, title, items, subtitle="", selected=0, footer="Enter select   Esc back",
              catalog_pages=None):
-        row_height, visible = self.menu_layout()
         while True:
+            self.update_layout()
+            row_height, visible = self.menu_layout()
             self.frame(title, subtitle, footer)
             start = selected // visible * visible
             for offset, item in enumerate(items[start:start + visible]):
@@ -303,6 +324,7 @@ class Browser:
 
     def fullscreen(self, entry, index):
         while True:
+            self.update_layout()
             gfx.clear(gfx.WHITE)
             gfx.color(gfx.BLACK)
             self.draw_preview(0, 0, self.width, self.height)

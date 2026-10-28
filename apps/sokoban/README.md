@@ -19,3 +19,5 @@ Controls:
 - Escape or Q exits.
 
 Requires a graphic display.
+
+Display rotation refits the current puzzle without resetting moves or undo history.

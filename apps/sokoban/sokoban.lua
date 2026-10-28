@@ -459,6 +459,11 @@ local ok, err = pcall(function()
 
     while not solaros.should_exit() do
         local key = gfx.getch(250)
+        local width, height = gfx.size()
+        if width ~= w or height ~= h then
+            w, h = width, height
+            draw(state, level_index, w, h)
+        end
         if key ~= nil then
             if key == gfx.KEY_ESCAPE or key == KEY_Q then
                 break

@@ -76,3 +76,6 @@ Playground packages, and the package-gated `solaros.http` API. A local
 temperature/humidity sensor is optional. HTTPS requests use the SolarOS
 certificate bundle. No Open-Meteo API key is required for non-commercial use;
 review Open-Meteo's current terms for other use.
+
+Display rotation redraws the cached forecast and preserves the selected
+hourly or daily view and refresh timer.

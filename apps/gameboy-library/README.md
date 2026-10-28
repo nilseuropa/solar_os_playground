@@ -93,3 +93,6 @@ additional compatibility check.
 
 Each game's license and copyright remain those of its authors. The catalog
 listing is not a blanket license for the games or their assets.
+
+Display rotation updates the menu and screenshot layout while preserving the
+current selection and search text.

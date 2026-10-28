@@ -329,6 +329,43 @@ class BrowserTest(unittest.TestCase):
         self.browser = self.ui.Browser(self.library)
         self.value = core.normalize_entry(entry())
 
+    def test_resize_wakes_menu_without_losing_selection_or_fetching_again(self):
+        self.solaros.should_exit = lambda: False
+
+        def resize():
+            self.graphics.size.return_value = (240, 400)
+            return None
+
+        self.graphics.getch.side_effect = lambda timeout: (
+            resize() if self.graphics.getch.call_count == 1 else 13)
+        selected, key = self.browser.menu("Games", ["Game"] * 10, selected=3)
+        self.assertEqual((selected, key), (3, 13))
+        self.assertEqual((self.browser.width, self.browser.height), (240, 400))
+        self.assertEqual(self.graphics.present.call_count, 2)
+        self.library.filtered_page.assert_not_called()
+
+    def test_resize_does_not_consume_a_queued_key(self):
+        self.solaros.should_exit = lambda: False
+        self.graphics.size.return_value = (240, 400)
+        self.assertEqual(self.browser.key(), self.ui.RESIZE)
+        self.graphics.getch.assert_not_called()
+        self.graphics.getch.return_value = 13
+        self.assertEqual(self.browser.key(), 13)
+
+    def test_message_redraws_on_resize_and_still_waits_for_a_real_key(self):
+        self.solaros.should_exit = lambda: False
+
+        def key(timeout):
+            if self.graphics.getch.call_count == 1:
+                self.graphics.size.return_value = (240, 400)
+                return None
+            return ord("x")
+
+        self.graphics.getch.side_effect = key
+        self.browser.message("Saved ROM", "Keep this message visible")
+        self.assertEqual(self.graphics.present.call_count, 2)
+        self.assertEqual(self.graphics.getch.call_count, 2)
+
     def test_successful_handoff_releases_graphics_and_propagates_system_exit(self):
         self.apps.launch.side_effect = SystemExit()
         with mock.patch.object(self.ui, "validate_rom"), self.assertRaises(SystemExit):
